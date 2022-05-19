@@ -1,6 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
+import Navbar from './components/Navbar';
+import { BrowserRouter, Routes, Route, } from 'react-router-dom';
 import './App.css';
+import { Container } from 'semantic-ui-react';
+import Home from './components/Home'
+import Character from './components/Character'
+import Planets from './components/Planets'
+import Movies from './components/Movies'
 
 function App() {
 
@@ -40,7 +47,17 @@ function App() {
 
   return (
     <div>
-      <p>Hello</p>
+      <BrowserRouter>
+        <div className='Container'>
+          <Navbar></Navbar>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/characters' element={<Character />} />
+            <Route path='/movies' element={<Movies />} />
+            <Route path='/planets' element={<Planets />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </div>
   );
 }
