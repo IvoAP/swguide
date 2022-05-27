@@ -31,6 +31,12 @@ export default function Navbar() {
                             </Link>
                         </li>
 
+                        <li className="nav-item active">
+                            <Link className="nav-link" to="/species">Species
+                            </Link>
+                        </li>
+
+
 
                     </ul>
                 </div>
