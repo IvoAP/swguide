@@ -41,22 +41,36 @@ function App() {
     fetchPeople()
     fetchPlanets()
     fetchFilms()
+    setLoading(false)
   }, [])
 
 
+  console.log("Movies: ", films)
 
   return (
     <div>
       <BrowserRouter>
-        <div className='Container'>
-          <Navbar></Navbar>
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/characters' element={<Character />} />
-            <Route path='/movies' element={<Movies />} />
-            <Route path='/planets' element={<Planets />} />
-          </Routes>
-        </div>
+        <Navbar></Navbar>
+        <Container>
+          {loading ? (
+            <div>
+              <h1 className='load'>Loading...</h1>
+            </div>
+          ) : (
+            <Routes>
+              <Route path='/' element={<Home />}>
+              </Route>
+              <Route exact path='/characters' element={<Character data={people} />} >
+
+              </Route>
+              <Route path='/movies' element={<Movies />}>
+              </Route>
+              <Route path='/planets' element={<Planets />}>
+              </Route>
+            </Routes>
+          )}
+
+        </Container>
       </BrowserRouter>
     </div>
   );
