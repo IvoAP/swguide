@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, Container, Grid } from 'semantic-ui-react';
+import { useNavigate } from "react-router";
 import './Characters.css'
 
 export default function Characters({ data }) {
+
+    let navigate = useNavigate()
 
     return (
         <div>
@@ -26,6 +29,9 @@ export default function Characters({ data }) {
                                             <p>{people.skin_color}</p>
                                             <strong>Eye Color</strong>
                                             <p>{people.eye_color}</p>
+                                            <button className="btn-primary" onClick={() => { navigate("/character") }}>
+                                                See More
+                                            </button>
                                         </CardDescription>
                                     </CardContent>
                                 </Card>

@@ -5,10 +5,11 @@ import { BrowserRouter, Routes, Route, } from 'react-router-dom';
 import './App.css';
 import { Container } from 'semantic-ui-react';
 import Home from './components/Home'
-import Character from './components/Characters/Characters'
+import Characters from './components/Characters/Characters'
 import Planets from './components/Planets/Planets'
 import Movies from './components/Movies/Movies'
 import Species from './components/Species/Species';
+import Character from './components/Characters/Character';
 
 function App() {
 
@@ -61,20 +62,20 @@ function App() {
       <BrowserRouter>
         <Navbar></Navbar>
         <Container>
-          {loading ? (
-            <div>
-              <h1 className='load'>Loading...</h1>
-            </div>
-          ) : (
-            <Routes>
-              <Route path='/' element={<Home />} />
-              <Route exact path='/characters' element={<Character data={people} />} />
-              <Route path='/movies' element={<Movies data={films} />} />
-              <Route path='/planets' element={<Planets data={planets} />} />
-              <Route path='/species' element={<Species data={species} />} />
-            </Routes>
-          )}
-
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/characters' element={<Characters data={people} />} />
+            <Route path='/movies' element={<Movies data={films} />} />
+            <Route path='/planets' element={<Planets data={planets} />} />
+            <Route path='/species' element={<Species data={species} />} />
+          </Routes>
+        </Container>
+      </BrowserRouter>
+      <BrowserRouter>
+        <Container>
+          <Routes>
+            <Route path='/character/:id' element={<Character />} />
+          </Routes>
         </Container>
       </BrowserRouter>
     </div>
