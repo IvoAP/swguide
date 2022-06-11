@@ -51,11 +51,9 @@ function App() {
     fetchPlanets()
     fetchFilms()
     fetchSpecies()
-    setLoading(false)
   }, [])
 
 
-  console.log("Species: ", species)
 
   return (
     <div>
@@ -68,12 +66,6 @@ function App() {
             <Route path='/movies' element={<Movies data={films} />} />
             <Route path='/planets' element={<Planets data={planets} />} />
             <Route path='/species' element={<Species data={species} />} />
-          </Routes>
-        </Container>
-      </BrowserRouter>
-      <BrowserRouter>
-        <Container>
-          <Routes>
             <Route path='/character/:id' element={<Character />} />
           </Routes>
         </Container>

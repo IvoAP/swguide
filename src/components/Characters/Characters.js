@@ -29,7 +29,7 @@ export default function Characters({ data }) {
                                             <p>{people.skin_color}</p>
                                             <strong>Eye Color</strong>
                                             <p>{people.eye_color}</p>
-                                            <button className="btn-primary" onClick={() => { navigate("/character") }}>
+                                            <button className="btn-primary" onClick={() => { navigate("/character/" + (i+1)) }}>
                                                 See More
                                             </button>
                                         </CardDescription>
