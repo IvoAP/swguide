@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import './Characters.css'
 import { useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, Container,} from 'semantic-ui-react';
+import axios from "axios";
 
 
 export default function Character() {
@@ -28,24 +29,26 @@ export default function Character() {
             )
         }
 
-        async function fetchPeopleId() {
-          let url = 'https://swapi.dev/api/people/'+id+'?format=json'
-          let rep = await fetch('rep')
-          let data = await rep.json()
-          setPeople(data)
+        async function fetchPeople() {
+            if(id >= 1 && id <=10){
+                let url = 'https://swapi.dev/api/people/'+id+'/?format=json'
+                let rep = await fetch(url)
+                let data = await rep.json()
+                setPeople(data)
+            }
+            
         }
-    
-        
-    
+
        
-        getId()
-        fetchPeopleId()
+    
         
+
+        getId()
+        fetchPeople()
         
       }, [])
 
-      console.log(people)
-    
+      console.log(typeof(id))
 
     return (
         <div>
