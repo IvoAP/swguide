@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, Container, Grid } from 'semantic-ui-react';
 import './Movies.css'
+import { useNavigate } from "react-router";
 
 export default function Movies({ data }) {
+
+    let navigate = useNavigate()
 
     return (
         <div>
@@ -26,6 +29,9 @@ export default function Movies({ data }) {
                                             <p>{film.producer}</p>
                                             <strong>Release date</strong>
                                             <p>{film.release_date}</p>
+                                            <button className="btn-secondary" onClick={() => { navigate("/movie/" + (i+1)) }}>
+                                                See More
+                                            </button>
                                         </CardDescription>
                                     </CardContent>
                                 </Card>

@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from "react";
-import './Characters.css'
-import { useLocation } from 'react-router-dom';
+import './Movies.css'
+import { useLocation } from "react-router";
 import { Card, CardContent, CardDescription, CardHeader, Container,} from 'semantic-ui-react';
 
 
-export default function Character() {
+export default function Movie(){
 
-    // Character
-    const [id, setPeopleId] = useState()
-    const [people, setPeople] = useState({})
+    // Movie
+    const [id, setMovieId] = useState()
+    const [movie, setMovie] = useState({})
     const [load, setLoad] = useState(false)
     let location = useLocation();
 
-    // Movies List
-    const [idMovies, setIdMovies] = useState([])
-    const[moviesNames, setMoviesNames] = useState([])
+    // Charactert
+    const [idCharacters, setIdCharacters] = useState([])
+    const[charactersNames, setCharactersNames] = useState([])
+
 
     useEffect(() => {
-        function getIdCharacter(){
+        function getIdMovie(){
             let path = location.pathname
             let curr_id = ""
             for( let auto of path){
@@ -26,27 +27,27 @@ export default function Character() {
                     curr_id = curr_id + auto
                 }
             }
-            setPeopleId(
+            setMovieId(
                  curr_id
             )
            
         }
-        getIdCharacter()
+        getIdMovie()
 
       }, [])
 
-    useEffect(() => {
+      useEffect(() => {
         async function fetchDatas() {
             // variables to fetch
-            let url = 'https://swapi.dev/api/people/'+id+'/?format=json'
+            let url = 'https://swapi.dev/api/films/'+id+'/?format=json'
             let rep = await fetch(url)
             let data = await rep.json()
-            // varialbles to get ids of the movies 
+            // varialbles to get ids of the characters
             let flag = false
             let listOfIds = []
             let curr_id = ""
-            var urlsMovies = String(data.films)
-            for(let auto of urlsMovies){
+            var urlsPeoples = String(data.characters)
+            for(let auto of urlsPeoples){
                 if (!isNaN(auto)){
                     flag = true
                 }else{
@@ -64,19 +65,19 @@ export default function Character() {
             }
 
            
-            //variables to get the name of the movies
+            //variables to get the name of the charactes
             let results = []
             let data2 = null
             for (var i = 0; i<listOfIds.length; i++) {
                 let id = listOfIds[i]
-                let rep = await fetch('https://swapi.dev/api/films/'+id+'/?format=json')
+                let rep = await fetch('https://swapi.dev/api/people/'+id+'/?format=json')
                 data2 = await rep.json()
-                results.push(data2.title)
+                results.push(data2.name)
             }
             
-            setIdMovies(listOfIds)
-            setPeople(data)
-            setMoviesNames(results)
+            setIdCharacters(listOfIds)
+            setMovie(data)
+            setCharactersNames(results)
             setLoad(true)
         }
 
@@ -87,41 +88,36 @@ export default function Character() {
 
     },[load])
 
-    
-
-    console.log("Movies names " + moviesNames)
-
-
-    
-    
+    console.log("Ids :" + charactersNames)
 
     return (
         <div>
             <Container>
                 <Card className="card">
                     <CardContent className="container">
-                        <CardHeader>{people.name}</CardHeader>
-                            <CardDescription>
-                            <strong>Height</strong>
-                            <p>{people.height}</p>
-                            <strong>Mass</strong>
-                            <p>{people.mass}</p>
-                            <strong>Hair Color</strong>
-                            <p>{people.hair_color}</p>
-                            <strong>Skin Color</strong>
-                            <p>{people.skin_color}</p>
-                            <strong>Eye Color</strong>
-                            <p>{people.eye_color}</p>
-                            <strong>Movies</strong>
-                            {moviesNames.map((title,i) => {
+                        <CardHeader>{movie.title}</CardHeader>
+                        <CardDescription>
+                            <strong>Episode</strong>
+                            <p>{movie.episode_id}</p>
+                            <strong>Opening crawl</strong>
+                            <p>{movie.opening_crawl}</p>
+                            <strong>Director</strong>
+                            <p>{movie.director}</p>
+                            <strong>Producer</strong>
+                            <p>{movie.producer}</p>
+                            <strong>Release date</strong>
+                            <p>{movie.release_date}</p>
+                            <strong>Characters</strong>
+                            {charactersNames.map((name,i) => {
                                 return(
-                                    <p>{i+1} - {title}</p>
+                                    <p>{i+1} - {name}</p>
                                 )
                             })}
-                            </CardDescription>
+                        </CardDescription>
                     </CardContent>
                 </Card>
             </Container>
         </div>
     );
+
 }

@@ -10,6 +10,7 @@ import Planets from './components/Planets/Planets'
 import Movies from './components/Movies/Movies'
 import Species from './components/Species/Species';
 import Character from './components/Characters/Character';
+import Movie from './components/Movies/Movie';
 
 function App() {
 
@@ -67,6 +68,7 @@ function App() {
             <Route path='/planets' element={<Planets data={planets} />} />
             <Route path='/species' element={<Species data={species} />} />
             <Route path='/character/:id' element={<Character />} />
+            <Route path='/movie/:id' element = {<Movie/>}/>
           </Routes>
         </Container>
       </BrowserRouter>
