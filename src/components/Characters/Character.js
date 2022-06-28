@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import './Characters.css'
 import { useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, Container,} from 'semantic-ui-react';
+import { useNavigate } from "react-router";
 
 
 export default function Character() {
+
+    let navigate = useNavigate()
 
     // Character
     const [id, setPeopleId] = useState()
@@ -115,7 +118,14 @@ export default function Character() {
                             <strong>Movies</strong>
                             {moviesNames.map((title,i) => {
                                 return(
-                                    <p>{i+1} - {title}</p>
+                                    <div>
+                                        <p>{i+1} - {title}</p>
+                                        <button className="btn-secondary" onClick={() => { navigate("/movie/" + (idMovies[i])) }}>
+                                                    See More
+                                        </button>
+                                        <br></br>
+                                        <br></br>
+                                    </div>
                                 )
                             })}
                             </CardDescription>
