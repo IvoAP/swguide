@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import './Movies.css'
 import { useLocation } from "react-router";
 import { Card, CardContent, CardDescription, CardHeader, Container,} from 'semantic-ui-react';
+import { useNavigate } from "react-router";
+
 
 
 export default function Movie(){
+
+    let navigate = useNavigate()
 
     // Movie
     const [id, setMovieId] = useState()
@@ -110,7 +114,14 @@ export default function Movie(){
                             <strong>Characters</strong>
                             {charactersNames.map((name,i) => {
                                 return(
-                                    <p>{i+1} - {name}</p>
+                                    <div>
+                                        <p>{i+1} - {name}</p>
+                                        <button className="btn-secondary" onClick={() => { navigate("/character/" + (idCharacters[i])) }}>
+                                                    See More
+                                        </button>
+                                        <br></br>
+                                        <br></br>
+                                    </div>
                                 )
                             })}
                         </CardDescription>
