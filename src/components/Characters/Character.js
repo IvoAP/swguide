@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import './Characters.css'
 import { useLocation } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, Container,} from 'semantic-ui-react';
-import axios from "axios";
 
 
 export default function Character() {
 
     const [id, setPeopleId] = useState()
     const [people, setPeople] = useState({})
+    const [loadPeople, setLoadPeople] = useState(false)
     let location = useLocation();
 
     useEffect(() => {
-
         function getId(){
             console.log(location)
             let path = location.pathname
@@ -23,32 +22,34 @@ export default function Character() {
                     curr_id = curr_id + auto
                 }
             }
-
             setPeopleId(
                  curr_id
             )
+           
         }
-
-        async function fetchPeople() {
-            if(id >= 1 && id <=10){
-                let url = 'https://swapi.dev/api/people/'+id+'/?format=json'
-                let rep = await fetch(url)
-                let data = await rep.json()
-                setPeople(data)
-            }
-            
-        }
-
-       
-    
-        
-
         getId()
-        fetchPeople()
-        
+
       }, [])
 
-      console.log(typeof(id))
+    useEffect(() => {
+        async function fetchPeople() {
+            let url = 'https://swapi.dev/api/people/'+id+'/?format=json'
+            let rep = await fetch(url)
+            let data = await rep.json()
+            /* TODO: Pode lançar um erro caso o usuário tente acessar um pessoal que não existe */
+            // if(data && data.detail === 'Not found') {
+            //     throw new Error('Personagem não encontrado')
+            // }
+            setPeople(data)
+            setLoadPeople(true)
+        }
+        fetchPeople()
+
+    },[loadPeople])
+
+    
+
+    console.log(people)
 
     return (
         <div>
@@ -66,8 +67,8 @@ export default function Character() {
                             <strong>Skin Color</strong>
                             <p>{people.skin_color}</p>
                             <strong>Eye Color</strong>
-                                           
-                          <p>{people.eye_color}</p>             
+
+                          <p>{people.eye_color}</p>
                             </CardDescription>
                     </CardContent>
                 </Card>
