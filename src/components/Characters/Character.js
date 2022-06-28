@@ -6,18 +6,22 @@ import { Card, CardContent, CardDescription, CardHeader, Container,} from 'seman
 
 export default function Character() {
 
+    // Character
     const [id, setPeopleId] = useState()
     const [people, setPeople] = useState({})
-    const [loadPeople, setLoadPeople] = useState(false)
+    const [load, setLoad] = useState(false)
     let location = useLocation();
 
+    // Movies List
+    const [idMovies, setIdMovies] = useState([])
+    const[moviesNames, setMoviesNames] = useState([])
+
     useEffect(() => {
-        function getId(){
-            console.log(location)
+        function getIdCharacter(){
             let path = location.pathname
             let curr_id = ""
             for( let auto of path){
-                // Check if is not a number
+                // Check if is  a number
                 if(!isNaN(auto)){
                     curr_id = curr_id + auto
                 }
@@ -27,29 +31,69 @@ export default function Character() {
             )
            
         }
-        getId()
+        getIdCharacter()
 
       }, [])
 
     useEffect(() => {
-        async function fetchPeople() {
+        async function fetchDatas() {
+            // variables to fetch
             let url = 'https://swapi.dev/api/people/'+id+'/?format=json'
             let rep = await fetch(url)
             let data = await rep.json()
-            /* TODO: Pode lançar um erro caso o usuário tente acessar um pessoal que não existe */
-            // if(data && data.detail === 'Not found') {
-            //     throw new Error('Personagem não encontrado')
-            // }
-            setPeople(data)
-            setLoadPeople(true)
-        }
-        fetchPeople()
+            // varialbles to getid of the movies 
+            let flag = false
+            let listOfIds = []
+            let curr_id = ""
+            var urlsMovies = String(data.films)
+            for(let auto of urlsMovies){
+                if (!isNaN(auto)){
+                    flag = true
+                }else{
+                    if(curr_id != ""){
+                        listOfIds.push(curr_id)
+                        curr_id = ""
+                    }
+                    flag = false
+                }
 
-    },[loadPeople])
+                if(flag){
+                    curr_id  = curr_id + auto
+                }
+
+            }
+
+           
+            //variables to get the name of the movies
+            let results = []
+            let data2 = null
+            for (var i = 0; i<listOfIds.length; i++) {
+                let id = listOfIds[i]
+                let rep = await fetch('https://swapi.dev/api/films/'+id+'/?format=json')
+                data2 = await rep.json()
+                results.push(data2.title)
+            }
+            
+            setIdMovies(listOfIds)
+            setPeople(data)
+            setMoviesNames(results)
+            setLoad(true)
+        }
+
+      
+        
+        fetchDatas()
+        
+
+    },[load])
 
     
 
-    console.log(people)
+    console.log("Movies names " + moviesNames)
+
+
+    
+    
 
     return (
         <div>
@@ -67,8 +111,13 @@ export default function Character() {
                             <strong>Skin Color</strong>
                             <p>{people.skin_color}</p>
                             <strong>Eye Color</strong>
-
-                          <p>{people.eye_color}</p>
+                            <p>{people.eye_color}</p>
+                            <strong>Movies</strong>
+                            {moviesNames.map((title,i) => {
+                                return(
+                                    <p>{title}</p>
+                                )
+                            })}
                             </CardDescription>
                     </CardContent>
                 </Card>
