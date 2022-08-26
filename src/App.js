@@ -25,14 +25,25 @@ function App() {
 
   useEffect(() => {
     async function fetchPeople() {
-      let rep = await fetch('https://swapi.dev/api/people/?format=json')
-      let data = await rep.json()
-      setPeople(data.results)
+      let results = []
+      let data = null
+      for (var i = 1; i < 10; i++) {
+        let rep = await fetch(`https://swapi.dev/api/people/?format=json&page=${i}`)
+        data = await rep.json()
+        data.results.map(item => results.push(item));
+      }
+      setPeople(results)
     }
 
     async function fetchPlanets() {
-      let rep = await fetch('https://swapi.dev/api/planets/?format=json')
-      let data = await rep.json()
+      let results = []
+      let data = null
+      for(var i = 1; i<4; i++){
+        let rep = await fetch(`https://swapi.dev/api/planets/?format=json&page=${i}`)
+        data = await rep.json()
+        data.results.map(item => results.push(item));
+      }
+        // let data = await rep.json()
       setPlanets(data.results)
     }
 
@@ -43,8 +54,14 @@ function App() {
     }
 
     async function fetchSpecies() {
-      let rep = await fetch('https://swapi.dev/api/species/?format=json')
-      let data = await rep.json()
+      let results = []
+      let data = null
+      for(var i = 1; i<3; i++){
+        let rep = await fetch(`https://swapi.dev/api/species/?format=json&page=${i}`)
+        data = await rep.json()
+        data.results.map(item => results.push(item));
+      }
+        // let data = await rep.json()
       setSpecises(data.results)
     }
 
