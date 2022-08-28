@@ -38,13 +38,15 @@ function App() {
     async function fetchPlanets() {
       let results = []
       let data = null
-      for(var i = 1; i<4; i++){
+      for(var i = 1; i<=6; i++){
+        console.log(i)
         let rep = await fetch(`https://swapi.dev/api/planets/?format=json&page=${i}`)
         data = await rep.json()
         data.results.map(item => results.push(item));
+        console.log(i)
+        console.log(data.results)
       }
-        // let data = await rep.json()
-      setPlanets(data.results)
+      setPlanets(results)
     }
 
     async function fetchFilms() {
@@ -56,13 +58,13 @@ function App() {
     async function fetchSpecies() {
       let results = []
       let data = null
-      for(var i = 1; i<3; i++){
-        let rep = await fetch(`https://swapi.dev/api/species/?format=json&page=${i}`)
+      for(var i = 1; i<=2; i++){
+        let rep = await fetch(`https://swapi.dev/api/species/?format=json&page=${1}`)
         data = await rep.json()
         data.results.map(item => results.push(item));
       }
         // let data = await rep.json()
-      setSpecises(data.results)
+      setSpecises(results)
     }
 
     fetchPeople()
