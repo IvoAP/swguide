@@ -1,7 +1,7 @@
 # SWguide
 This project an application to consume the Star wars API from the source: https://swapi.dev/. And the proposal is list the character and movies, and that the user can navigate between movies and see the charaters of this specefic movie, and navigate betwwen characters and see which movies this specific charater appears.
 
-# Getting Started with Create React App
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
